@@ -46,56 +46,190 @@
 1. Enemy loss $L_E$	README.md	/^#### 1. Enemy loss $L_E\$$/;"	t	section:Codenames Spymaster""Learning Objective
 2. Civilian loss $L_C$	README.md	/^#### 2. Civilian loss $L_C\$$/;"	t	section:Codenames Spymaster""Learning Objective
 3. Assassin loss $L_A$	README.md	/^#### 3. Assassin loss $L_A\$$/;"	t	section:Codenames Spymaster""Learning Objective
+BatchGenerator	batched.py	/^class BatchGenerator:$/;"	c
+BatchGenerator	batched_simple.py	/^class BatchGenerator():$/;"	c
+ClueLoss	batched.py	/^class ClueLoss(nn.Module):$/;"	c
+ClueLoss	batched_simple.py	/^class ClueLoss(nn.Module):$/;"	c
 ClueLoss	main.py	/^class ClueLoss(nn.Module):$/;"	c
+ClueLoss	simple.py	/^class ClueLoss(nn.Module):$/;"	c
 Codenames Spymaster	README.md	/^# Codenames Spymaster$/;"	c
 Definitions	README.md	/^## Definitions $/;"	s	chapter:Codenames Spymaster
+F	batched.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
+F	batched_simple.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
+F	layers.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
 F	main.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
+F	simple.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
 Learning Objective	README.md	/^## Learning Objective$/;"	s	chapter:Codenames Spymaster
 Online Mining of Games (OMG)	README.md	/^### Online Mining of Games (OMG)$/;"	S	section:Codenames Spymaster""Learning Objective
+PermEquivLayer	layers.py	/^class PermEquivLayer(nn.Module):$/;"	c
 PermEquivLayer	main.py	/^class PermEquivLayer(nn.Module):$/;"	c
+PermEquivLayer	simple.py	/^class PermEquivLayer(nn.Module):$/;"	c
+Set2Vec	layers.py	/^class Set2Vec(nn.Module):$/;"	c
 Set2Vec	main.py	/^class Set2Vec(nn.Module):$/;"	c
+Set2Vec	simple.py	/^class Set2Vec(nn.Module):$/;"	c
+SpyMaster	layers.py	/^class SpyMaster(nn.Module):$/;"	c
+SpyMasterModel	layers.py	/^class SpyMasterModel(nn.Module):$/;"	c
 SpyMasterModel	main.py	/^class SpyMasterModel(nn.Module):$/;"	c
-__init__	main.py	/^    def __init__(self, emb_dim: int, expand_factor: int = 2):$/;"	m	class:SpyMasterModel
+SpyMasterModel	simple.py	/^class SpyMasterModel(nn.Module):$/;"	c
+__init__	batched.py	/^    def __init__($/;"	m	class:BatchGenerator
+__init__	batched.py	/^    def __init__(self, margin: float = 0.3):$/;"	m	class:ClueLoss
+__init__	batched_simple.py	/^    def __init__(self): $/;"	m	class:ClueLoss
+__init__	batched_simple.py	/^    def __init__(self, deck_filename: str = "codename_vocab.txt", emb_name: str= "42B", emb_dim:/;"	m	class:BatchGenerator
+__init__	layers.py	/^    def __init__(self, emb_dim: int, expand_factor: int = 1):$/;"	m	class:SpyMasterModel
+__init__	layers.py	/^    def __init__(self, emb_dim: int, hidden_dim: int=50):$/;"	m	class:SpyMaster
+__init__	layers.py	/^    def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):$/;"	m	class:Set2Vec
+__init__	layers.py	/^    def __init__(self, in_dim: int, out_dim: int):$/;"	m	class:PermEquivLayer
+__init__	main.py	/^    def __init__(self, emb_dim: int, expand_factor: int = 1):$/;"	m	class:SpyMasterModel
 __init__	main.py	/^    def __init__(self, enemy_margin: float, bystander_margin: float, assassin_margin: float):$/;"	m	class:ClueLoss
 __init__	main.py	/^    def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):$/;"	m	class:Set2Vec
 __init__	main.py	/^    def __init__(self, in_dim: int, out_dim: int):$/;"	m	class:PermEquivLayer
+__init__	simple.py	/^    def __init__(self, emb_dim: int, expand_factor: int = 2):$/;"	m	class:SpyMasterModel
+__init__	simple.py	/^    def __init__(self, enemy_margin: float, bystander_margin: float, assassin_margin: float):$/;"	m	class:ClueLoss
+__init__	simple.py	/^    def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):$/;"	m	class:Set2Vec
+__init__	simple.py	/^    def __init__(self, in_dim: int, out_dim: int):$/;"	m	class:PermEquivLayer
 assassin_margin	main.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
+assassin_margin	simple.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
+batch_generator	batched.py	/^batch_generator = BatchGenerator()$/;"	v
+batch_generator	batched_simple.py	/^batch_generator = BatchGenerator()$/;"	v
+batch_negative	batched.py	/^        batch_positive, batch_negative = batch_generator.get_batch($/;"	v
+batch_positive	batched.py	/^        batch_positive, batch_negative = batch_generator.get_batch($/;"	v
+batch_size	batched.py	/^batch_size = 256 $/;"	v
+batch_size	batched_simple.py	/^batch_size = 128$/;"	v
 bystander_margin	main.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
+bystander_margin	simple.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
 c_t	main.py	/^            c_t = model(x_t, x_e, x_b, x_a)$/;"	v
+c_t	simple.py	/^            c_t = model(x_t)$/;"	v
+clues	batched.py	/^        clues = model(batch_positive, batch_negative)$/;"	v
+clues	batched_simple.py	/^        clues = model(targets)$/;"	v
 deck	main.py	/^deck = load_deck()$/;"	v
+deck	simple.py	/^deck = load_deck()$/;"	v
 deck_numpy	main.py	/^deck_numpy = np.array(deck, dtype="object")$/;"	v
+deck_numpy	simple.py	/^deck_numpy = np.array(deck, dtype="object")$/;"	v
+diameters	main.py	/^        diameters = torch.tensor([torch.cdist(x_T[idx], x_T[idx]).max() for idx in subsets_idx])$/;"	v
+diameters	simple.py	/^        diameters = torch.tensor([torch.cdist(x_T[idx], x_T[idx]).max() for idx in subsets_idx])$/;"	v
+difficulties	batched.py	/^difficulties = [0, 1, 2, 4, 8, 16, 32]$/;"	v
+easiest_subset_idx	main.py	/^        easiest_subset_idx = torch.argsort(diameters) # Indicies of subsets sorted by diameter i/;"	v
+easiest_subset_idx	simple.py	/^        easiest_subset_idx = torch.argsort(diameters) # Indicies of subsets sorted by diameter i/;"	v
 emb_dim	main.py	/^emb_dim = 300# 50, 100, 200 or 300$/;"	v
+emb_dim	simple.py	/^emb_dim = 300# 50, 100, 200 or 300$/;"	v
+emb_name	main.py	/^emb_name = "42B" #6B, twitter.27B, 42B...$/;"	v
+emb_name	simple.py	/^emb_name = "42B" #6B, twitter.27B, 42B...$/;"	v
 embedded_deck	main.py	/^embedded_deck = words2vec(word_embeddings, deck)$/;"	v
+embedded_deck	simple.py	/^embedded_deck = words2vec(word_embeddings, deck)$/;"	v
 enemy_margin	main.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
+enemy_margin	simple.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
+forward	batched.py	/^    def forward(self, clues, positives, negatives):$/;"	m	class:ClueLoss
+forward	batched_simple.py	/^    def forward(self, clues, targets):$/;"	m	class:ClueLoss
+forward	layers.py	/^    def forward($/;"	m	class:SpyMaster	typeref:typename:torch.Tensor
+forward	layers.py	/^    def forward($/;"	m	class:SpyMasterModel	typeref:typename:torch.Tensor
+forward	layers.py	/^    def forward(self, x: torch.Tensor) -> torch.Tensor:$/;"	m	class:PermEquivLayer	typeref:typename:torch.Tensor
+forward	layers.py	/^    def forward(self, x: torch.Tensor) -> torch.Tensor:$/;"	m	class:Set2Vec	typeref:typename:torch.Tensor
 forward	main.py	/^    def forward($/;"	m	class:SpyMasterModel	typeref:typename:torch.Tensor
 forward	main.py	/^    def forward(self, c_t, x_t, x_e, x_b, x_a):$/;"	m	class:ClueLoss
 forward	main.py	/^    def forward(self, x: torch.Tensor) -> torch.Tensor:$/;"	m	class:PermEquivLayer	typeref:typename:torch.Tensor
 forward	main.py	/^    def forward(self, x: torch.Tensor) -> torch.Tensor:$/;"	m	class:Set2Vec	typeref:typename:torch.Tensor
+forward	simple.py	/^    def forward($/;"	m	class:SpyMasterModel	typeref:typename:torch.Tensor
+forward	simple.py	/^    def forward(self, c_t, x_t):$/;"	m	class:ClueLoss
+forward	simple.py	/^    def forward(self, x: torch.Tensor) -> torch.Tensor:$/;"	m	class:PermEquivLayer	typeref:typename:torch.Tensor
+forward	simple.py	/^    def forward(self, x: torch.Tensor) -> torch.Tensor:$/;"	m	class:Set2Vec	typeref:typename:torch.Tensor
 generate_random_position	main.py	/^def generate_random_position(deck: np.ndarray, embedded_deck: torch.Tensor):$/;"	f
-idx	main.py	/^            idx = list(combination)$/;"	v
+generate_random_position	simple.py	/^def generate_random_position(deck: np.ndarray, embedded_deck: torch.Tensor):$/;"	f
+get_batch	batched.py	/^    def get_batch($/;"	m	class:BatchGenerator	typeref:typename:torch.Tensor
+get_batch	batched_simple.py	/^    def get_batch(self, batch_size: int, n_t: int, max_difficulty: int) -> torch.Tensor:$/;"	m	class:BatchGenerator	typeref:typename:torch.Tensor
+hyperparams	batched.py	/^hyperparams = itertools.product($/;"	v
+idx	main.py	/^            idx = subsets_idx[subset_idx]$/;"	v
+idx	simple.py	/^            idx = subsets_idx[subset_idx]$/;"	v
 load_deck	main.py	/^def load_deck(filename: str = "codename_vocab.txt") -> list[str]:$/;"	f	typeref:typename:list[str]
+load_deck	simple.py	/^def load_deck(filename: str = "codename_vocab.txt") -> list[str]:$/;"	f	typeref:typename:list[str]
+load_vocabulary	batched.py	/^def load_vocabulary($/;"	f	typeref:typename:list[str]
+load_vocabulary	batched_simple.py	/^def load_vocabulary(word_embedding, vocab_filename: str="english_vocab.txt") -> list[str]:$/;"	f	typeref:typename:list[str]
+loss	batched.py	/^        loss = loss_function(clues, batch_positive, batch_negative)$/;"	v
+loss	batched_simple.py	/^        loss = loss_function(clues, targets)$/;"	v
 loss	main.py	/^            loss = loss_function(c_t, x_t, x_e, x_b, x_a)$/;"	v
+loss	simple.py	/^            loss = loss_function(c_t, x_t)$/;"	v
+loss_function	batched.py	/^loss_function = ClueLoss()$/;"	v
+loss_function	batched_simple.py	/^loss_function = ClueLoss()$/;"	v
 loss_function	main.py	/^loss_function = ClueLoss(enemy_margin, bystander_margin, assassin_margin)$/;"	v
-lr	main.py	/^lr = 0.01$/;"	v
+loss_function	simple.py	/^loss_function = ClueLoss(enemy_margin, bystander_margin, assassin_margin)$/;"	v
+lr	batched.py	/^lr = 0.001$/;"	v
+lr	batched_simple.py	/^lr = 0.01$/;"	v
+lr	main.py	/^lr = 0.001$/;"	v
+lr	simple.py	/^lr = 0.01$/;"	v
+m	main.py	/^        m = min(2, len(subsets_idx)) # Use top 5 easiest subsets$/;"	v
+m	simple.py	/^        m = min(10, len(subsets_idx)) # Use top 5 easiest subsets$/;"	v
 max_losses	main.py	/^max_losses = []$/;"	v
+max_losses	simple.py	/^max_losses = []$/;"	v
+max_n_negative_words	batched.py	/^max_n_negative_words = 17$/;"	v
+max_n_positive_words	batched.py	/^max_n_positive_words = 6$/;"	v
+max_n_target_words	batched_simple.py	/^max_n_target_words = 6$/;"	v
 max_step_loss	main.py	/^    max_step_loss = np.max(step_losses)$/;"	v
+max_step_loss	simple.py	/^    max_step_loss = np.max(step_losses)$/;"	v
+max_target_difficulty	batched_simple.py	/^max_target_difficulty = 10$/;"	v
+max_words_to_guess	main.py	/^max_words_to_guess = 5$/;"	v
+max_words_to_guess	simple.py	/^max_words_to_guess = 3$/;"	v
 mean_losses	main.py	/^mean_losses = []$/;"	v
+mean_losses	simple.py	/^mean_losses = []$/;"	v
 mean_step_loss	main.py	/^    mean_step_loss = np.mean(step_losses)$/;"	v
+mean_step_loss	simple.py	/^    mean_step_loss = np.mean(step_losses)$/;"	v
 min_losses	main.py	/^min_losses = []$/;"	v
+min_losses	simple.py	/^min_losses = []$/;"	v
 min_step_loss	main.py	/^    min_step_loss = np.min(step_losses)$/;"	v
+min_step_loss	simple.py	/^    min_step_loss = np.min(step_losses)$/;"	v
+model	batched.py	/^model = SpyMaster(emb_dim=batch_generator.emb_dim, hidden_dim=100)$/;"	v
+model	batched_simple.py	/^model = SpyMasterModel(emb_dim=batch_generator.emb_dim)$/;"	v
 model	main.py	/^model = SpyMasterModel(emb_dim)$/;"	v
+model	simple.py	/^model = SpyMasterModel(emb_dim)$/;"	v
+n_params	batched.py	/^n_params = ($/;"	v
 n_team_words	main.py	/^    n_team_words = len(position["team_words_emb"])$/;"	v
+n_team_words	simple.py	/^    n_team_words = len(position["team_words_emb"])$/;"	v
+nn	batched.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+nn	batched_simple.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+nn	layers.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
 nn	main.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+nn	simple.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
+np	batched.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	batched_simple.py	/^import numpy as np$/;"	I	nameref:module:numpy
 np	main.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	simple.py	/^import numpy as np$/;"	I	nameref:module:numpy
+num_params	batched.py	/^num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)$/;"	v
+num_params	batched_simple.py	/^num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)$/;"	v
 num_params	main.py	/^num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)$/;"	v
-optimizer	main.py	/^optimizer = torch.optim.SGD(model.parameters(), lr=lr)$/;"	v
+num_params	simple.py	/^num_params = sum(p.numel() for p in model.parameters() if p.requires_grad)$/;"	v
+optimizer	batched.py	/^optimizer = torch.optim.Adam(model.parameters(), lr=lr)$/;"	v
+optimizer	batched_simple.py	/^optimizer = torch.optim.Adam(model.parameters(), lr=lr)$/;"	v
+optimizer	main.py	/^optimizer = torch.optim.Adam(model.parameters(), lr=lr)$/;"	v
+optimizer	simple.py	/^optimizer = torch.optim.Adam(model.parameters(), lr=lr)$/;"	v
+plt	batched.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
+plt	batched_simple.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
 plt	main.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
+plt	simple.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
 position	main.py	/^    position = generate_random_position(deck_numpy, embedded_deck)$/;"	v
+position	simple.py	/^    position = generate_random_position(deck_numpy, embedded_deck)$/;"	v
+preprocess_words	batched.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
+preprocess_words	batched_simple.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
 step_losses	main.py	/^    step_losses = []$/;"	v
-steps	main.py	/^steps = 5000 $/;"	v
-word_embeddings	main.py	/^word_embeddings = GloVe(name="42B", dim=emb_dim)$/;"	v
+step_losses	simple.py	/^    step_losses = []$/;"	v
+steps	batched.py	/^steps = 500 $/;"	v
+steps	batched_simple.py	/^steps = 400$/;"	v
+steps	main.py	/^steps = 50000 $/;"	v
+steps	simple.py	/^steps = 5000 $/;"	v
+subsets_idx	main.py	/^        subsets_idx = list(map(list, itertools.combinations(np.arange(n_team_words), r=(j+1))))$/;"	v
+subsets_idx	simple.py	/^        subsets_idx = list(map(list, itertools.combinations(np.arange(n_team_words), r=(j+1))))$/;"	v
+targets	batched_simple.py	/^        targets = batch_generator.get_batch(batch_size, n_t, max_difficulty) $/;"	v
+train_losses	batched.py	/^train_losses = []$/;"	v
+train_losses	batched_simple.py	/^train_losses = []$/;"	v
+word_embeddings	main.py	/^word_embeddings = GloVe(name=emb_name, dim=emb_dim)$/;"	v
+word_embeddings	simple.py	/^word_embeddings = GloVe(name=emb_name, dim=emb_dim)$/;"	v
+words	main.py	/^            words = position["team_words"][idx]$/;"	v
 words2vec	main.py	/^def words2vec($/;"	f	typeref:typename:torch.Tensor
+words2vec	simple.py	/^def words2vec($/;"	f	typeref:typename:torch.Tensor
+x_T	main.py	/^        x_T = position["team_words_emb"]$/;"	v
+x_T	simple.py	/^        x_T = position["team_words_emb"]$/;"	v
 x_a	main.py	/^    x_e, x_b, x_a = ($/;"	v
+x_a	simple.py	/^    x_e, x_b, x_a = ($/;"	v
 x_b	main.py	/^    x_e, x_b, x_a = ($/;"	v
+x_b	simple.py	/^    x_e, x_b, x_a = ($/;"	v
 x_e	main.py	/^    x_e, x_b, x_a = ($/;"	v
+x_e	simple.py	/^    x_e, x_b, x_a = ($/;"	v
 x_t	main.py	/^            x_t = position["team_words_emb"][idx]$/;"	v
+x_t	simple.py	/^            x_t = position["team_words_emb"][idx]$/;"	v
