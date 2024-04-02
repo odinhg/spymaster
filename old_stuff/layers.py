@@ -28,6 +28,19 @@ class Set2Vec(nn.Module):
         out = torch.mean(out, dim=-2)
         return out
 
+class SpyMasterModel(nn.Module):
+    
+    def __init__(self, emb_dim: int, expand_factor: int = 1):
+        super().__init__()
+        hidden_dim = emb_dim * expand_factor
+        self.set_nn_t = Set2Vec(emb_dim, hidden_dim, emb_dim)
+
+    def forward(
+        self, x_t: torch.Tensor,
+    ) -> torch.Tensor:
+        h_t = self.set_nn_t(x_t)
+        return h_t 
+
 class SpyMaster(nn.Module):
     
     def __init__(self, emb_dim: int, hidden_dim: int=50):
