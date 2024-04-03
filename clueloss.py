@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class ClueLoss(nn.Module):
-    def __init__(self, margin: float = 0.001):
+    def __init__(self, margin: float = 0.0):
         super().__init__()
         self.margin = torch.tensor(margin)
 

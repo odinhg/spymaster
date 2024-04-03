@@ -40,9 +40,9 @@ model.eval()
 loss_function = ClueLoss()
 #loss_function.eval()
 
-positive_words = ["apple"]
-negative_words = ["europe"]
-#positive_words, negative_words = get_random_words(config.deck_filename, 4, 9)
+positive_words = ["dog", "puppy"]
+negative_words = ["cat"]
+#positive_words, negative_words = get_random_words(config.deck_filename, 2, 4)
 
 positive_emb = word_embedding.get_vecs_by_tokens(positive_words, lower_case_backup=True).unsqueeze(0)
 negative_emb = word_embedding.get_vecs_by_tokens(negative_words, lower_case_backup=True).unsqueeze(0)
@@ -54,7 +54,7 @@ print(loss.item())
 
 #dist_to_vocab = 1 - F.cosine_similarity(vocab_emb, clue.unsqueeze(0), dim=1)
 dist_to_vocab = torch.linalg.norm(vocab_emb - clue.unsqueeze(0), dim=1)
-_, closest_idx = torch.topk(dist_to_vocab, 10, largest=False)
+_, closest_idx = torch.topk(dist_to_vocab, 50, largest=False)
 clues = []
 illegal_words = set(positive_words + negative_words)
 for idx in closest_idx.detach().tolist():
@@ -65,7 +65,9 @@ for idx in closest_idx.detach().tolist():
         continue
     if any(word in negative_word or negative_word in word for negative_word in negative_words):
         continue
-    print(word)
+    word_loss = loss_function(word_embedding.get_vecs_by_tokens([word]), positive_emb, negative_emb).item()
+    print(f"{word}\t{word_loss:.3f}")
+
 
 print(f"Positive words: {positive_words}")
 print(f"Negative words: {negative_words}")

@@ -18,9 +18,9 @@ class Set2Vec(nn.Module):
 
         self.layers = nn.Sequential(
             PermEquivLayer(in_dim, hidden_dim),
-            nn.GELU(),
+            nn.Tanh(),
             PermEquivLayer(hidden_dim, out_dim),
-            nn.GELU(),
+            nn.Tanh(),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -34,7 +34,11 @@ class SpyMaster(nn.Module):
         super().__init__()
         self.set_nn_positive = Set2Vec(emb_dim, hidden_dim, hidden_dim)
         self.set_nn_negative = Set2Vec(emb_dim, hidden_dim, hidden_dim)
-        self.fcnn = nn.Sequential(nn.Linear(2 * hidden_dim, emb_dim))
+        self.fcnn = nn.Sequential(
+            nn.Linear(2 * hidden_dim, hidden_dim),
+            nn.GELU(),
+            nn.Linear(hidden_dim, emb_dim),
+            )
 
     def forward(
             self, x_positive: torch.Tensor, x_negative: torch.Tensor,
@@ -42,5 +46,5 @@ class SpyMaster(nn.Module):
         h_positive = self.set_nn_positive(x_positive)
         h_negative = self.set_nn_negative(x_negative)
         h_combined = torch.cat([h_positive, h_negative], dim=-1)
-        out = self.fcnn(h_combined)
+        out = self.fcnn(h_combined) + torch.mean(x_positive, dim=1)
         return out

@@ -55,6 +55,7 @@ ClueLoss	old_stuff/batched_simple.py	/^class ClueLoss(nn.Module):$/;"	c
 ClueLoss	old_stuff/main.py	/^class ClueLoss(nn.Module):$/;"	c
 ClueLoss	old_stuff/simple.py	/^class ClueLoss(nn.Module):$/;"	c
 Codenames Spymaster	README.md	/^# Codenames Spymaster$/;"	c
+D	noml.py	/^D = load_vocab("codename_vocab.txt", words_in_embedding)$/;"	v
 Definitions	README.md	/^## Definitions $/;"	s	chapter:Codenames Spymaster
 F	clueloss.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
 F	inference.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
@@ -65,7 +66,12 @@ F	old_stuff/layers.py	/^import torch.nn.functional as F$/;"	I	nameref:module:tor
 F	old_stuff/main.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
 F	old_stuff/simple.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
 Learning Objective	README.md	/^## Learning Objective$/;"	s	chapter:Codenames Spymaster
+N	noml.py	/^N = ["fish", "australia"]$/;"	v
+N_emb	noml.py	/^N_emb = word_embedding.get_vecs_by_tokens(N, lower_case_backup=True)$/;"	v
 Online Mining of Games (OMG)	README.md	/^### Online Mining of Games (OMG)$/;"	S	section:Codenames Spymaster""Learning Objective
+P	noml.py	/^P = ["dog", "horse", "cat"]$/;"	v
+P_emb	noml.py	/^P_emb = word_embedding.get_vecs_by_tokens(P, lower_case_backup=True)$/;"	v
+P_numpy	noml.py	/^P_numpy = np.array(P, dtype="object")$/;"	v
 PermEquivLayer	layers.py	/^class PermEquivLayer(nn.Module):$/;"	c
 PermEquivLayer	old_stuff/layers.py	/^class PermEquivLayer(nn.Module):$/;"	c
 PermEquivLayer	old_stuff/main.py	/^class PermEquivLayer(nn.Module):$/;"	c
@@ -79,9 +85,14 @@ SpyMaster	old_stuff/layers.py	/^class SpyMaster(nn.Module):$/;"	c
 SpyMasterModel	old_stuff/layers.py	/^class SpyMasterModel(nn.Module):$/;"	c
 SpyMasterModel	old_stuff/main.py	/^class SpyMasterModel(nn.Module):$/;"	c
 SpyMasterModel	old_stuff/simple.py	/^class SpyMasterModel(nn.Module):$/;"	c
-_	inference.py	/^_, closest_idx = torch.topk(dist_to_vocab, 10, largest=False)$/;"	v
+W	noml.py	/^W = load_vocab("nounlist.txt", words_in_embedding)$/;"	v
+W_emb	noml.py	/^W_emb = word_embedding.get_vecs_by_tokens(W, lower_case_backup=True)$/;"	v
+W_numpy	noml.py	/^W_numpy = np.array(W, dtype="object")$/;"	v
+_	inference.py	/^_, closest_idx = torch.topk(dist_to_vocab, 50, largest=False)$/;"	v
+_	noml.py	/^        max_dist_Wp, _ = torch.max(dist_Wp, dim=-1)$/;"	v
+_	noml.py	/^min_dist_WN, _ = torch.min(dist_WN, dim=-1)$/;"	v
 __init__	batching.py	/^    def __init__($/;"	m	class:BatchGenerator
-__init__	clueloss.py	/^    def __init__(self, margin: float = 0.001):$/;"	m	class:ClueLoss
+__init__	clueloss.py	/^    def __init__(self, margin: float = 0.0):$/;"	m	class:ClueLoss
 __init__	layers.py	/^    def __init__(self, emb_dim: int, hidden_dim: int=50):$/;"	m	class:SpyMaster
 __init__	layers.py	/^    def __init__(self, in_dim: int, hidden_dim: int, out_dim: int):$/;"	m	class:Set2Vec
 __init__	layers.py	/^    def __init__(self, in_dim: int, out_dim: int):$/;"	m	class:PermEquivLayer
@@ -115,10 +126,11 @@ batch_size	old_stuff/batched.py	/^batch_size = 256 $/;"	v
 batch_size	old_stuff/batched_simple.py	/^batch_size = 128$/;"	v
 bystander_margin	old_stuff/main.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
 bystander_margin	old_stuff/simple.py	/^enemy_margin, bystander_margin, assassin_margin = 0.05, 0.01, 0.1$/;"	v
+c	noml.py	/^        c = 1$/;"	v
 c_t	old_stuff/main.py	/^            c_t = model(x_t, x_e, x_b, x_a)$/;"	v
 c_t	old_stuff/simple.py	/^            c_t = model(x_t)$/;"	v
 checkpoint_filename	config.py	/^checkpoint_filename = "spymaster.pt"$/;"	v
-closest_idx	inference.py	/^_, closest_idx = torch.topk(dist_to_vocab, 10, largest=False)$/;"	v
+closest_idx	inference.py	/^_, closest_idx = torch.topk(dist_to_vocab, 50, largest=False)$/;"	v
 clue	inference.py	/^clue = model(positive_emb, negative_emb).squeeze(0)$/;"	v
 clues	inference.py	/^clues = []$/;"	v
 clues	old_stuff/batched.py	/^        clues = model(batch_positive, batch_negative)$/;"	v
@@ -129,17 +141,24 @@ deck	old_stuff/simple.py	/^deck = load_deck()$/;"	v
 deck_filename	config.py	/^deck_filename = "codename_vocab.txt"$/;"	v
 deck_numpy	old_stuff/main.py	/^deck_numpy = np.array(deck, dtype="object")$/;"	v
 deck_numpy	old_stuff/simple.py	/^deck_numpy = np.array(deck, dtype="object")$/;"	v
+diam_p	noml.py	/^        diam_p = torch.cdist(p_emb, p_emb).max()$/;"	v
 diameters	old_stuff/main.py	/^        diameters = torch.tensor([torch.cdist(x_T[idx], x_T[idx]).max() for idx in subsets_idx])$/;"	v
 diameters	old_stuff/simple.py	/^        diameters = torch.tensor([torch.cdist(x_T[idx], x_T[idx]).max() for idx in subsets_idx])$/;"	v
 difficulties	config.py	/^difficulties = [0, 1, 2, 4, 8, 16, 32, 64, 128]$/;"	v
 difficulties	old_stuff/batched.py	/^difficulties = [0, 1, 2, 4, 8, 16, 32]$/;"	v
+dist_WN	noml.py	/^    dist_WN = 1 - torch.nn.functional.cosine_similarity(W_emb[:,:,None], N_emb.t()[None,:,:])$/;"	v
+dist_WN	noml.py	/^    dist_WN = torch.cdist(W_emb, N_emb, p=2)$/;"	v
+dist_WP	noml.py	/^    dist_WP = 1 - torch.nn.functional.cosine_similarity(W_emb[:,:,None], P_emb.t()[None,:,:])$/;"	v
+dist_WP	noml.py	/^    dist_WP = torch.cdist(W_emb, P_emb, p=2)$/;"	v
+dist_Wp	noml.py	/^        dist_Wp = dist_WP[:, list(I_p)]$/;"	v
 dist_to_vocab	inference.py	/^dist_to_vocab = torch.linalg.norm(vocab_emb - clue.unsqueeze(0), dim=1)$/;"	v
+distance_function	noml.py	/^distance_function = "cosine"$/;"	v
 easiest_subset_idx	old_stuff/main.py	/^        easiest_subset_idx = torch.argsort(diameters) # Indicies of subsets sorted by diameter i/;"	v
 easiest_subset_idx	old_stuff/simple.py	/^        easiest_subset_idx = torch.argsort(diameters) # Indicies of subsets sorted by diameter i/;"	v
-emb_dim	config.py	/^emb_dim = 300$/;"	v
+emb_dim	config.py	/^emb_dim = 50#300$/;"	v
 emb_dim	old_stuff/main.py	/^emb_dim = 300# 50, 100, 200 or 300$/;"	v
 emb_dim	old_stuff/simple.py	/^emb_dim = 300# 50, 100, 200 or 300$/;"	v
-emb_name	config.py	/^emb_name = "42B"$/;"	v
+emb_name	config.py	/^emb_name = "6B"#"42B"$/;"	v
 emb_name	old_stuff/main.py	/^emb_name = "42B" #6B, twitter.27B, 42B...$/;"	v
 emb_name	old_stuff/simple.py	/^emb_name = "42B" #6B, twitter.27B, 42B...$/;"	v
 embedded_deck	old_stuff/main.py	/^embedded_deck = words2vec(word_embeddings, deck)$/;"	v
@@ -170,14 +189,16 @@ get_batch	batching.py	/^    def get_batch($/;"	m	class:BatchGenerator	typeref:ty
 get_batch	old_stuff/batched.py	/^    def get_batch($/;"	m	class:BatchGenerator	typeref:typename:torch.Tensor
 get_batch	old_stuff/batched_simple.py	/^    def get_batch(self, batch_size: int, n_t: int, max_difficulty: int) -> torch.Tensor:$/;"	m	class:BatchGenerator	typeref:typename:torch.Tensor
 get_random_words	inference.py	/^def get_random_words(deck_filename: str, n_positive: int, n_negative: int) -> tuple[list[str]]:$/;"	f	typeref:typename:tuple[list[str]]
-hidden_dim	config.py	/^hidden_dim = 100$/;"	v
+hidden_dim	config.py	/^hidden_dim = 300 $/;"	v
 hyperparams	old_stuff/batched.py	/^hyperparams = itertools.product($/;"	v
 hyperparams	train.py	/^hyperparams = itertools.product($/;"	v
 idx	old_stuff/main.py	/^            idx = subsets_idx[subset_idx]$/;"	v
 idx	old_stuff/simple.py	/^            idx = subsets_idx[subset_idx]$/;"	v
 illegal_words	inference.py	/^illegal_words = set(positive_words + negative_words)$/;"	v
+illegal_words	noml.py	/^illegal_words = set(P + N)$/;"	v
 load_deck	old_stuff/main.py	/^def load_deck(filename: str = "codename_vocab.txt") -> list[str]:$/;"	f	typeref:typename:list[str]
 load_deck	old_stuff/simple.py	/^def load_deck(filename: str = "codename_vocab.txt") -> list[str]:$/;"	f	typeref:typename:list[str]
+load_vocab	noml.py	/^def load_vocab(filename: str, allowed_words: set[str]) -> list[str]:$/;"	f	typeref:typename:list[str]
 load_vocabulary	inference.py	/^def load_vocabulary($/;"	f	typeref:typename:list[str]
 load_vocabulary	old_stuff/batched.py	/^def load_vocabulary($/;"	f	typeref:typename:list[str]
 load_vocabulary	old_stuff/batched_simple.py	/^def load_vocabulary(word_embedding, vocab_filename: str="english_vocab.txt") -> list[str]:$/;"	f	typeref:typename:list[str]
@@ -193,18 +214,20 @@ loss_function	old_stuff/batched_simple.py	/^loss_function = ClueLoss()$/;"	v
 loss_function	old_stuff/main.py	/^loss_function = ClueLoss(enemy_margin, bystander_margin, assassin_margin)$/;"	v
 loss_function	old_stuff/simple.py	/^loss_function = ClueLoss(enemy_margin, bystander_margin, assassin_margin)$/;"	v
 loss_function	train.py	/^loss_function = ClueLoss()$/;"	v
-lr	config.py	/^lr = 0.001$/;"	v
+lr	config.py	/^lr = 0.005$/;"	v
 lr	old_stuff/batched.py	/^lr = 0.001$/;"	v
 lr	old_stuff/batched_simple.py	/^lr = 0.01$/;"	v
 lr	old_stuff/main.py	/^lr = 0.001$/;"	v
 lr	old_stuff/simple.py	/^lr = 0.01$/;"	v
 m	old_stuff/main.py	/^        m = min(2, len(subsets_idx)) # Use top 5 easiest subsets$/;"	v
 m	old_stuff/simple.py	/^        m = min(10, len(subsets_idx)) # Use top 5 easiest subsets$/;"	v
+margin	noml.py	/^margin = 0.1$/;"	v
+max_dist_Wp	noml.py	/^        max_dist_Wp, _ = torch.max(dist_Wp, dim=-1)$/;"	v
 max_losses	old_stuff/main.py	/^max_losses = []$/;"	v
 max_losses	old_stuff/simple.py	/^max_losses = []$/;"	v
 max_n_negative_words	config.py	/^max_n_negative_words = 6#17$/;"	v
 max_n_negative_words	old_stuff/batched.py	/^max_n_negative_words = 17$/;"	v
-max_n_positive_words	config.py	/^max_n_positive_words = 6$/;"	v
+max_n_positive_words	config.py	/^max_n_positive_words = 2#6$/;"	v
 max_n_positive_words	old_stuff/batched.py	/^max_n_positive_words = 6$/;"	v
 max_n_target_words	old_stuff/batched_simple.py	/^max_n_target_words = 6$/;"	v
 max_step_loss	old_stuff/main.py	/^    max_step_loss = np.max(step_losses)$/;"	v
@@ -216,6 +239,7 @@ mean_losses	old_stuff/main.py	/^mean_losses = []$/;"	v
 mean_losses	old_stuff/simple.py	/^mean_losses = []$/;"	v
 mean_step_loss	old_stuff/main.py	/^    mean_step_loss = np.mean(step_losses)$/;"	v
 mean_step_loss	old_stuff/simple.py	/^    mean_step_loss = np.mean(step_losses)$/;"	v
+min_dist_WN	noml.py	/^min_dist_WN, _ = torch.min(dist_WN, dim=-1)$/;"	v
 min_losses	old_stuff/main.py	/^min_losses = []$/;"	v
 min_losses	old_stuff/simple.py	/^min_losses = []$/;"	v
 min_step_loss	old_stuff/main.py	/^    min_step_loss = np.min(step_losses)$/;"	v
@@ -226,12 +250,13 @@ model	old_stuff/batched_simple.py	/^model = SpyMasterModel(emb_dim=batch_generat
 model	old_stuff/main.py	/^model = SpyMasterModel(emb_dim)$/;"	v
 model	old_stuff/simple.py	/^model = SpyMasterModel(emb_dim)$/;"	v
 model	train.py	/^model = SpyMaster(emb_dim=config.emb_dim, hidden_dim=config.hidden_dim)$/;"	v
+n_p	noml.py	/^n_p = len(P)$/;"	v
 n_params	old_stuff/batched.py	/^n_params = ($/;"	v
 n_params	train.py	/^n_params = ($/;"	v
 n_team_words	old_stuff/main.py	/^    n_team_words = len(position["team_words_emb"])$/;"	v
 n_team_words	old_stuff/simple.py	/^    n_team_words = len(position["team_words_emb"])$/;"	v
 negative_emb	inference.py	/^negative_emb = word_embedding.get_vecs_by_tokens(negative_words, lower_case_backup=True).unsquee/;"	v
-negative_words	inference.py	/^negative_words = ["europe"]$/;"	v
+negative_words	inference.py	/^negative_words = ["cat"]$/;"	v
 nn	clueloss.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
 nn	layers.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
 nn	old_stuff/batched.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
@@ -241,6 +266,7 @@ nn	old_stuff/main.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
 nn	old_stuff/simple.py	/^import torch.nn as nn$/;"	I	nameref:module:torch.nn
 np	batching.py	/^import numpy as np$/;"	I	nameref:module:numpy
 np	inference.py	/^import numpy as np$/;"	I	nameref:module:numpy
+np	noml.py	/^import numpy as np$/;"	I	nameref:module:numpy
 np	old_stuff/batched.py	/^import numpy as np$/;"	I	nameref:module:numpy
 np	old_stuff/batched_simple.py	/^import numpy as np$/;"	I	nameref:module:numpy
 np	old_stuff/main.py	/^import numpy as np$/;"	I	nameref:module:numpy
@@ -255,6 +281,7 @@ optimizer	old_stuff/batched_simple.py	/^optimizer = torch.optim.Adam(model.param
 optimizer	old_stuff/main.py	/^optimizer = torch.optim.Adam(model.parameters(), lr=lr)$/;"	v
 optimizer	old_stuff/simple.py	/^optimizer = torch.optim.Adam(model.parameters(), lr=lr)$/;"	v
 optimizer	train.py	/^optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)$/;"	v
+p_emb	noml.py	/^        p_emb = P_emb[list(I_p)]$/;"	v
 plt	old_stuff/batched.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
 plt	old_stuff/batched_simple.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
 plt	old_stuff/main.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.pyplot
@@ -263,13 +290,14 @@ plt	train.py	/^import matplotlib.pyplot as plt$/;"	I	nameref:module:matplotlib.p
 position	old_stuff/main.py	/^    position = generate_random_position(deck_numpy, embedded_deck)$/;"	v
 position	old_stuff/simple.py	/^    position = generate_random_position(deck_numpy, embedded_deck)$/;"	v
 positive_emb	inference.py	/^positive_emb = word_embedding.get_vecs_by_tokens(positive_words, lower_case_backup=True).unsquee/;"	v
-positive_words	inference.py	/^positive_words = ["apple"]$/;"	v
+positive_words	inference.py	/^positive_words = ["dog", "puppy"]$/;"	v
 preprocess_words	batching.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
 preprocess_words	old_stuff/batched.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
 preprocess_words	old_stuff/batched_simple.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
+score	noml.py	/^        score = max_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin)$/;"	v
 step_losses	old_stuff/main.py	/^    step_losses = []$/;"	v
 step_losses	old_stuff/simple.py	/^    step_losses = []$/;"	v
-steps	config.py	/^steps = 1000 $/;"	v
+steps	config.py	/^steps = 5000 $/;"	v
 steps	old_stuff/batched.py	/^steps = 500 $/;"	v
 steps	old_stuff/batched_simple.py	/^steps = 400$/;"	v
 steps	old_stuff/main.py	/^steps = 50000 $/;"	v
@@ -277,19 +305,25 @@ steps	old_stuff/simple.py	/^steps = 5000 $/;"	v
 subsets_idx	old_stuff/main.py	/^        subsets_idx = list(map(list, itertools.combinations(np.arange(n_team_words), r=(j+1))))$/;"	v
 subsets_idx	old_stuff/simple.py	/^        subsets_idx = list(map(list, itertools.combinations(np.arange(n_team_words), r=(j+1))))$/;"	v
 targets	old_stuff/batched_simple.py	/^        targets = batch_generator.get_batch(batch_size, n_t, max_difficulty) $/;"	v
+top_k_clues	noml.py	/^top_k_clues = 10$/;"	v
+top_k_idx	noml.py	/^        top_k_scores, top_k_idx = torch.topk(score, 2 * top_k_clues + r, largest=False)$/;"	v
+top_k_scores	noml.py	/^        top_k_scores, top_k_idx = torch.topk(score, 2 * top_k_clues + r, largest=False)$/;"	v
 train_losses	old_stuff/batched.py	/^train_losses = []$/;"	v
 train_losses	old_stuff/batched_simple.py	/^train_losses = []$/;"	v
 train_losses	train.py	/^train_losses = []$/;"	v
 vocab	inference.py	/^vocab, vocab_emb = load_vocabulary(word_embedding, vocab_filename=config.vocab_filename)$/;"	v
 vocab_emb	inference.py	/^vocab, vocab_emb = load_vocabulary(word_embedding, vocab_filename=config.vocab_filename)$/;"	v
-vocab_filename	config.py	/^vocab_filename = "english_vocab.txt"$/;"	v
+vocab_filename	config.py	/^vocab_filename = "english_vocab_2.txt"$/;"	v
 word	inference.py	/^    word = vocab[idx]$/;"	v
 word_embedding	inference.py	/^word_embedding = GloVe(name=config.emb_name, dim=config.emb_dim)$/;"	v
+word_embedding	noml.py	/^word_embedding = FastText(language="en")$/;"	v
 word_embeddings	old_stuff/main.py	/^word_embeddings = GloVe(name=emb_name, dim=emb_dim)$/;"	v
 word_embeddings	old_stuff/simple.py	/^word_embeddings = GloVe(name=emb_name, dim=emb_dim)$/;"	v
+word_loss	inference.py	/^    word_loss = loss_function(word_embedding.get_vecs_by_tokens([word]), positive_emb, negative_/;"	v
 words	old_stuff/main.py	/^            words = position["team_words"][idx]$/;"	v
 words2vec	old_stuff/main.py	/^def words2vec($/;"	f	typeref:typename:torch.Tensor
 words2vec	old_stuff/simple.py	/^def words2vec($/;"	f	typeref:typename:torch.Tensor
+words_in_embedding	noml.py	/^words_in_embedding = set(word_embedding.itos)$/;"	v
 x_T	old_stuff/main.py	/^        x_T = position["team_words_emb"]$/;"	v
 x_T	old_stuff/simple.py	/^        x_T = position["team_words_emb"]$/;"	v
 x_a	old_stuff/main.py	/^    x_e, x_b, x_a = ($/;"	v
