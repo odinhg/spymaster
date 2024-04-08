@@ -66,10 +66,10 @@ F	old_stuff/layers.py	/^import torch.nn.functional as F$/;"	I	nameref:module:tor
 F	old_stuff/main.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
 F	old_stuff/simple.py	/^import torch.nn.functional as F$/;"	I	nameref:module:torch.nn.functional
 Learning Objective	README.md	/^## Learning Objective$/;"	s	chapter:Codenames Spymaster
-N	noml.py	/^N = ["fish", "australia"]$/;"	v
+N	noml.py	/^N = ["play", "bill", "fly", "bond", "bear", "cook", "park", "pin", "pole", "link", "balloon", "d/;"	v
 N_emb	noml.py	/^N_emb = word_embedding.get_vecs_by_tokens(N, lower_case_backup=True)$/;"	v
 Online Mining of Games (OMG)	README.md	/^### Online Mining of Games (OMG)$/;"	S	section:Codenames Spymaster""Learning Objective
-P	noml.py	/^P = ["dog", "horse", "cat"]$/;"	v
+P	noml.py	/^P = ["pear", "dinosaur", "car", "screen", "guitar", "boat", "dart", "china", "throne"]$/;"	v
 P_emb	noml.py	/^P_emb = word_embedding.get_vecs_by_tokens(P, lower_case_backup=True)$/;"	v
 P_numpy	noml.py	/^P_numpy = np.array(P, dtype="object")$/;"	v
 PermEquivLayer	layers.py	/^class PermEquivLayer(nn.Module):$/;"	c
@@ -85,7 +85,7 @@ SpyMaster	old_stuff/layers.py	/^class SpyMaster(nn.Module):$/;"	c
 SpyMasterModel	old_stuff/layers.py	/^class SpyMasterModel(nn.Module):$/;"	c
 SpyMasterModel	old_stuff/main.py	/^class SpyMasterModel(nn.Module):$/;"	c
 SpyMasterModel	old_stuff/simple.py	/^class SpyMasterModel(nn.Module):$/;"	c
-W	noml.py	/^W = load_vocab("nounlist.txt", words_in_embedding)$/;"	v
+W	noml.py	/^W = load_vocab("english_vocab_2.txt", words_in_embedding)$/;"	v
 W_emb	noml.py	/^W_emb = word_embedding.get_vecs_by_tokens(W, lower_case_backup=True)$/;"	v
 W_numpy	noml.py	/^W_numpy = np.array(W, dtype="object")$/;"	v
 _	inference.py	/^_, closest_idx = torch.topk(dist_to_vocab, 50, largest=False)$/;"	v
@@ -221,7 +221,7 @@ lr	old_stuff/main.py	/^lr = 0.001$/;"	v
 lr	old_stuff/simple.py	/^lr = 0.01$/;"	v
 m	old_stuff/main.py	/^        m = min(2, len(subsets_idx)) # Use top 5 easiest subsets$/;"	v
 m	old_stuff/simple.py	/^        m = min(10, len(subsets_idx)) # Use top 5 easiest subsets$/;"	v
-margin	noml.py	/^margin = 0.1$/;"	v
+margin	noml.py	/^margin = 1.00$/;"	v
 max_dist_Wp	noml.py	/^        max_dist_Wp, _ = torch.max(dist_Wp, dim=-1)$/;"	v
 max_losses	old_stuff/main.py	/^max_losses = []$/;"	v
 max_losses	old_stuff/simple.py	/^max_losses = []$/;"	v
@@ -235,6 +235,7 @@ max_step_loss	old_stuff/simple.py	/^    max_step_loss = np.max(step_losses)$/;"	
 max_target_difficulty	old_stuff/batched_simple.py	/^max_target_difficulty = 10$/;"	v
 max_words_to_guess	old_stuff/main.py	/^max_words_to_guess = 5$/;"	v
 max_words_to_guess	old_stuff/simple.py	/^max_words_to_guess = 3$/;"	v
+mean_dist_Wp	noml.py	/^        mean_dist_Wp = torch.mean(dist_Wp, dim=-1)$/;"	v
 mean_losses	old_stuff/main.py	/^mean_losses = []$/;"	v
 mean_losses	old_stuff/simple.py	/^mean_losses = []$/;"	v
 mean_step_loss	old_stuff/main.py	/^    mean_step_loss = np.mean(step_losses)$/;"	v
@@ -294,7 +295,7 @@ positive_words	inference.py	/^positive_words = ["dog", "puppy"]$/;"	v
 preprocess_words	batching.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
 preprocess_words	old_stuff/batched.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
 preprocess_words	old_stuff/batched_simple.py	/^    def preprocess_words(self, words: list[str]):$/;"	m	class:BatchGenerator
-score	noml.py	/^        score = max_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin)$/;"	v
+score	noml.py	/^        score = max_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin) ** 2$/;"	v
 step_losses	old_stuff/main.py	/^    step_losses = []$/;"	v
 step_losses	old_stuff/simple.py	/^    step_losses = []$/;"	v
 steps	config.py	/^steps = 5000 $/;"	v
@@ -305,7 +306,7 @@ steps	old_stuff/simple.py	/^steps = 5000 $/;"	v
 subsets_idx	old_stuff/main.py	/^        subsets_idx = list(map(list, itertools.combinations(np.arange(n_team_words), r=(j+1))))$/;"	v
 subsets_idx	old_stuff/simple.py	/^        subsets_idx = list(map(list, itertools.combinations(np.arange(n_team_words), r=(j+1))))$/;"	v
 targets	old_stuff/batched_simple.py	/^        targets = batch_generator.get_batch(batch_size, n_t, max_difficulty) $/;"	v
-top_k_clues	noml.py	/^top_k_clues = 10$/;"	v
+top_k_clues	noml.py	/^top_k_clues = 2 $/;"	v
 top_k_idx	noml.py	/^        top_k_scores, top_k_idx = torch.topk(score, 2 * top_k_clues + r, largest=False)$/;"	v
 top_k_scores	noml.py	/^        top_k_scores, top_k_idx = torch.topk(score, 2 * top_k_clues + r, largest=False)$/;"	v
 train_losses	old_stuff/batched.py	/^train_losses = []$/;"	v

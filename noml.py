@@ -9,25 +9,25 @@ def load_vocab(filename: str, allowed_words: set[str]) -> list[str]:
     print(f"Read {len(words)} words from {filename} ", end="")
     words = list(set(words))
     print(f"({len(words)} unique).")
+    return [w for w in words if w in allowed_words] 
     vocab = [w for word in words if (w := word.split()[0]) in allowed_words]
     return vocab
 
-
-P = ["dog", "horse", "cat"]
-N = ["fish", "australia"]
+P = ["pear", "dinosaur", "car", "screen", "guitar", "boat", "dart", "china", "throne"]
+N = ["play", "bill", "fly", "bond", "bear", "cook", "park", "pin", "pole", "link", "balloon", "delay", "doctor", "radio", "mine", "oil"]
 distance_function = "cosine"
-top_k_clues = 10
-margin = 0.1
+top_k_clues = 2 
+margin = 1.00
 
 #word_embedding = GloVe(name="6B", dim=300)
 word_embedding = FastText(language="en")
 words_in_embedding = set(word_embedding.itos)
-W = load_vocab("nounlist.txt", words_in_embedding)
+W = load_vocab("english_vocab_2.txt", words_in_embedding)
 D = load_vocab("codename_vocab.txt", words_in_embedding)
 
 assert len(set(P).intersection(set(N))) == 0, "One or more words appears in both sets."
-assert all(p in D for p in P), f"One or more of the words {P} not in the deck."
-assert all(n in D for n in N), f"One or more of the words {N} not in the deck."
+#assert all(p in D for p in P), f"One or more of the words {P} not in the deck."
+#assert all(n in D for n in N), f"One or more of the words {N} not in the deck."
 
 P_emb = word_embedding.get_vecs_by_tokens(P, lower_case_backup=True)
 N_emb = word_embedding.get_vecs_by_tokens(N, lower_case_backup=True)
@@ -53,15 +53,18 @@ for r in range(2, n_p + 1):
     print(f"{r} word combinations:")
     for I_p in itertools.combinations(range(n_p), r):
         p_emb = P_emb[list(I_p)]
-        diam_p = torch.cdist(p_emb, p_emb).max()
-        print(f"Diam: {diam_p:.4f}")
         dist_Wp = dist_WP[:, list(I_p)]
-        #mean_dist_Wp = torch.mean(dist_Wp, dim=-1)
+        mean_dist_Wp = torch.mean(dist_Wp, dim=-1)
         max_dist_Wp, _ = torch.max(dist_Wp, dim=-1)
         #score = mean_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin)
-        score = max_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin)
+        #score = 2 * max_dist_Wp - min_dist_WN ** 2
+        score = max_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin) ** 2
         top_k_scores, top_k_idx = torch.topk(score, 2 * top_k_clues + r, largest=False)
-        print(f"\tTarget: {P_numpy[list(I_p)]}\n\tAvoid: {N}")
+        
+        diam_p = torch.cdist(p_emb, p_emb).max()
+        print(f"\tTarget: {P_numpy[list(I_p)]} (diam {diam_p:.3f})")
+        #print(f"\tTarget: {P_numpy[list(I_p)]}\n\tAvoid: {N}")
+        
         c = 1
         for i, (score, word) in enumerate(zip(top_k_scores, W_numpy[top_k_idx])):
             if word in illegal_words:
