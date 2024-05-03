@@ -25,10 +25,10 @@ def compute_distances(
         raise ValueError(f"Unknown distance function {distance_function}.")
 
 
-team_words = ["kangaroo", "road", "cat", "star", "beach"]
-enemy_words = ["cast", "bee", "death", "bowl", "knife"]
-assassin_word = "calf"
-bystander_words = ["pine", "hit", "princess", "stick", "soldier"]
+team_words = ["india", "flower", "bowl", "beer", "surf"]
+enemy_words = ["cast", "engine", "bee", "death", "stick"]
+assassin_word = "knife"
+bystander_words = ["pine", "hit", "princess", "car"]
 
 
 print(f"Team words:\n\t{team_words}")
@@ -36,15 +36,15 @@ print(f"Enemy words:\n\t{enemy_words}")
 print(f"Assassin word:\n\t{assassin_word}")
 print(f"Bystander words:\n\t{bystander_words}")
 
-max_n = 6
-min_n = 2
-distance_function = "euclidean"
-top_k_clues = 5
-margin_bystander = 0.50
-margin_enemy = 0.80
+# Minimum and maximum team words subset size
+min_n, max_n = (2, 6)
+distance_function = "cosine" 
+top_k_clues = 1
+margin_bystander = 0.10
+margin_enemy = 0.40
 margin_assassin = 1.00
 
-spymaster_vocab = "nounlist.txt"
+spymaster_vocab = "vocab.txt"
 word_embedding = FastText(language="en")
 words_in_embedding = set(word_embedding.itos)
 vocabulary = load_vocab(spymaster_vocab)
@@ -128,8 +128,8 @@ for r in range(min_n, min(max_n, n_team) + 1):
                 break
 
 for clue_word, clue_dict in candidates.items():
-    print(f"Targets for \"{clue_word}\":")
     targets_list, score_list = clue_dict["targets"], clue_dict["scores"]
-    for targets, score in zip(clue_dict["targets"], clue_dict["scores"]):
+    print(f"{len(targets_list)} target subsets for \"{clue_word}\":")
+    for targets, score in zip(targets_list, score_list):
         n_clue = len(targets)
         print(f"\t{n_clue}\t{score:.3f}\t{targets}")
