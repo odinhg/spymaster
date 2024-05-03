@@ -1,80 +1,135 @@
 import torch
 import numpy as np
-from torchtext.vocab.vectors import GloVe, FastText
+from torchtext.vocab.vectors import FastText
 import itertools
 
-def load_vocab(filename: str, allowed_words: set[str]) -> list[str]:
+
+def load_vocab(filename: str, allowed_words: set[str] | None = None) -> list[str]:
     with open(filename, "r") as f:
-        words = f.read().lower().splitlines()
-    print(f"Read {len(words)} words from {filename} ", end="")
-    words = list(set(words))
-    print(f"({len(words)} unique).")
-    return [w for w in words if w in allowed_words] 
-    vocab = [w for word in words if (w := word.split()[0]) in allowed_words]
-    return vocab
+        words = list(set(f.read().lower().splitlines()))
+    if allowed_words is None:
+        return words
+    return [w for w in words if w in allowed_words]
 
-P = ["pear", "dinosaur", "car", "screen", "guitar", "boat", "dart", "china", "throne"]
-N = ["play", "bill", "fly", "bond", "bear", "cook", "park", "pin", "pole", "link", "balloon", "delay", "doctor", "radio", "mine", "oil"]
-distance_function = "cosine"
-top_k_clues = 2 
-margin = 1.00
 
-#word_embedding = GloVe(name="6B", dim=300)
+def compute_distances(
+    x: torch.Tensor, y: torch.Tensor, method: str = "cosine"
+) -> torch.Tensor:
+    if method == "cosine":
+        return 1 - torch.nn.functional.cosine_similarity(
+            x[:, :, None], y.t()[None, :, :]
+        )
+    elif method == "euclidean":
+        return torch.cdist(x, y, p=2)
+    else:
+        raise ValueError(f"Unknown distance function {distance_function}.")
+
+
+team_words = ["kangaroo", "road", "cat", "star", "beach"]
+enemy_words = ["cast", "bee", "death", "bowl", "knife"]
+assassin_word = "calf"
+bystander_words = ["pine", "hit", "princess", "stick", "soldier"]
+
+
+print(f"Team words:\n\t{team_words}")
+print(f"Enemy words:\n\t{enemy_words}")
+print(f"Assassin word:\n\t{assassin_word}")
+print(f"Bystander words:\n\t{bystander_words}")
+
+max_n = 6
+min_n = 2
+distance_function = "euclidean"
+top_k_clues = 5
+margin_bystander = 0.50
+margin_enemy = 0.80
+margin_assassin = 1.00
+
+spymaster_vocab = "nounlist.txt"
 word_embedding = FastText(language="en")
 words_in_embedding = set(word_embedding.itos)
-W = load_vocab("english_vocab_2.txt", words_in_embedding)
-D = load_vocab("codename_vocab.txt", words_in_embedding)
+vocabulary = load_vocab(spymaster_vocab)
 
-assert len(set(P).intersection(set(N))) == 0, "One or more words appears in both sets."
-#assert all(p in D for p in P), f"One or more of the words {P} not in the deck."
-#assert all(n in D for n in N), f"One or more of the words {N} not in the deck."
+team_embeddings = word_embedding.get_vecs_by_tokens(team_words, lower_case_backup=True)
+enemy_embeddings = word_embedding.get_vecs_by_tokens(
+    enemy_words, lower_case_backup=True
+)
+assassin_embedding = word_embedding.get_vecs_by_tokens(
+    [assassin_word], lower_case_backup=True
+)
+bystander_embeddings = word_embedding.get_vecs_by_tokens(
+    bystander_words, lower_case_backup=True
+)
+vocabulary_embeddings = word_embedding.get_vecs_by_tokens(
+    vocabulary, lower_case_backup=True
+)
 
-P_emb = word_embedding.get_vecs_by_tokens(P, lower_case_backup=True)
-N_emb = word_embedding.get_vecs_by_tokens(N, lower_case_backup=True)
-W_emb = word_embedding.get_vecs_by_tokens(W, lower_case_backup=True)
+dist_to_team = compute_distances(
+    vocabulary_embeddings, team_embeddings, method=distance_function
+)
+dist_to_enemy = compute_distances(
+    vocabulary_embeddings, enemy_embeddings, method=distance_function
+)
+dist_to_assassin = compute_distances(
+    vocabulary_embeddings, assassin_embedding, method=distance_function
+)
+dist_to_bystanders = compute_distances(
+    vocabulary_embeddings, bystander_embeddings, method=distance_function
+)
 
-if distance_function == "cosine":
-    dist_WP = 1 - torch.nn.functional.cosine_similarity(W_emb[:,:,None], P_emb.t()[None,:,:])
-    dist_WN = 1 - torch.nn.functional.cosine_similarity(W_emb[:,:,None], N_emb.t()[None,:,:])
-elif distance_function == "euclidean":
-    dist_WP = torch.cdist(W_emb, P_emb, p=2)
-    dist_WN = torch.cdist(W_emb, N_emb, p=2)
-else:
-    raise ValueError(f"Unknown distance function {distance_function} given.")
+min_dist_to_enemy, _ = torch.min(dist_to_enemy, dim=-1)
+min_dist_to_bystanders, _ = torch.min(dist_to_bystanders, dim=-1)
+dist_to_assassin, _ = torch.min(dist_to_assassin, dim=-1)
 
-min_dist_WN, _ = torch.min(dist_WN, dim=-1)
+n_team = len(team_words)
+illegal_words = set(team_words + enemy_words + bystander_words + [assassin_word])
+vocabulary_numpy = np.array(vocabulary, dtype="object")
+team_words_numpy = np.array(team_words, dtype="object")
 
-n_p = len(P)
-W_numpy = np.array(W, dtype="object")
-P_numpy = np.array(P, dtype="object")
-illegal_words = set(P + N)
-
-for r in range(2, n_p + 1):
-    print(f"{r} word combinations:")
-    for I_p in itertools.combinations(range(n_p), r):
-        p_emb = P_emb[list(I_p)]
-        dist_Wp = dist_WP[:, list(I_p)]
-        mean_dist_Wp = torch.mean(dist_Wp, dim=-1)
-        max_dist_Wp, _ = torch.max(dist_Wp, dim=-1)
-        #score = mean_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin)
-        #score = 2 * max_dist_Wp - min_dist_WN ** 2
-        score = max_dist_Wp + torch.nn.functional.relu(max_dist_Wp - min_dist_WN + margin) ** 2
+candidates = {}
+for r in range(min_n, min(max_n, n_team) + 1):
+    for idxs in map(list, itertools.combinations(range(n_team), r)):
+        target_embeddings = team_embeddings[idxs]
+        dist_to_targets = dist_to_team[:, idxs]
+        mean_dist_to_targets = torch.mean(dist_to_targets, dim=-1)
+        max_dist_to_targets, _ = torch.max(dist_to_targets, dim=-1)
+        targets_diameter = torch.cdist(target_embeddings, target_embeddings).max()
+        score = (
+            mean_dist_to_targets
+            + torch.nn.functional.relu(
+                max_dist_to_targets - min_dist_to_enemy + margin_enemy
+            )
+            + torch.nn.functional.relu(
+                max_dist_to_targets - min_dist_to_bystanders + margin_bystander
+            )
+            + torch.nn.functional.relu(
+                max_dist_to_targets - dist_to_assassin + margin_assassin
+            )
+        )
         top_k_scores, top_k_idx = torch.topk(score, 2 * top_k_clues + r, largest=False)
-        
-        diam_p = torch.cdist(p_emb, p_emb).max()
-        print(f"\tTarget: {P_numpy[list(I_p)]} (diam {diam_p:.3f})")
-        #print(f"\tTarget: {P_numpy[list(I_p)]}\n\tAvoid: {N}")
-        
+        target_words = list(team_words_numpy[idxs])
         c = 1
-        for i, (score, word) in enumerate(zip(top_k_scores, W_numpy[top_k_idx])):
-            if word in illegal_words:
+        for i, (score, clue_word) in enumerate(
+            zip(top_k_scores, vocabulary_numpy[top_k_idx])
+        ):
+            if any(clue_word in word or word in clue_word for word in illegal_words):
                 continue
-            if any(word in p or p in word for p in P):
-                continue
-            if any(word in n or n in word for n in N):
-                continue
-            print(f"\t{c:02}: {score:.04}\t{word}")
+
+            if clue_word in candidates:
+                candidates[clue_word]["scores"].append(score.item())
+                candidates[clue_word]["targets"].append(target_words)
+            else:
+                candidates[clue_word] = {
+                    "scores": [score.item()],
+                    "targets": [target_words],
+                }
+
             c += 1
             if c > top_k_clues:
                 break
-        print("-"*50)
+
+for clue_word, clue_dict in candidates.items():
+    print(f"Targets for \"{clue_word}\":")
+    targets_list, score_list = clue_dict["targets"], clue_dict["scores"]
+    for targets, score in zip(clue_dict["targets"], clue_dict["scores"]):
+        n_clue = len(targets)
+        print(f"\t{n_clue}\t{score:.3f}\t{targets}")
