@@ -20,7 +20,7 @@ $$
 
 where $\alpha_e, \alpha_b, \alpha_a>0$ are margin parameters.
 
-The score function $S$ is inspired by contrastive loss functions and the value of $S(w_c)$ is minimized when $w_c$ is close to the words in $W$ and at a distance from the words in $W_e\cup W_b\cup \{w_a\}$. The margin parameters determines the amount of separation we desire for the different word categories. In Codenames, we typically want $\alpha_b\leq\alpha_e\leq\alpha_a$.
+The score function $S$ is inspired by loss functions used in contrastive learning, and the value of $S(w_c)$ is minimized when $w_c$ is close to the words in $W$ and at a distance from the words in $W_e\cup W_b\cup \{w_a\}$. The margin parameters determines the amount of separation we desire for the different word categories. In Codenames, we typically want $\alpha_b\leq\alpha_e\leq\alpha_a$.
 
 ### Example usage
 
@@ -56,3 +56,4 @@ Bystander words:
 ...
 ```
 
+As of now, the sets of words are specified directly in `main.py`.
